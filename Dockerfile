@@ -41,4 +41,4 @@ RUN chmod +x /app/init_container.sh
 
 EXPOSE 2222 5000
 
-CMD env | awk -F= '{print "export " $1"="$2 }' >> /etc/profile && source /etc/profile && /bin/bash /app/init_container.sh
+CMD env | sed -n "s/^\([^=]\+\)=\(.*\)$/export \1=\2/p"|sed 's/"/\\\"/g'|sed '/=/s//="/'|sed 's/$/"/'>>/etc/profile && source /etc/profile && /bin/bash /app/init_container.sh
