@@ -11,6 +11,10 @@ RUN apk --update add g++ \
     && echo "root:Docker!" | chpasswd \
     && echo "cd /home" >> /etc/bash.bashrc 
 
+# Add rsyslog
+ADD http://alpine.adiscon.com/rsyslog@lists.adiscon.com-5a55e598.rsa.pub /etc/apk/keys
+RUN echo 'http://alpine.adiscon.com/3.7/stable' >> /etc/apk/repositories
+RUN apk add rsyslog
 # Fixing issues from https://github.com/gliderlabs/docker-alpine/issues/42
 RUN  \
     # Tell openrc its running inside a container, till now that has meant LXC
